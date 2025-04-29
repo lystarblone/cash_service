@@ -10,4 +10,6 @@ urlpatterns = [
     path('transaction/edit/<int:pk>/', views.transaction_edit, name='transaction_edit'),
     path('transaction/delete/<int:pk>', views.transaction_delete, name='transaction_delete'),
     path('dictionaries/', views.dictionaries, name='dictionaries'),
+    path('api/categories/', views.api_categories, name='api_categories'),
+    path('api/subcategories/', views.api_subcategories, name='api_subcategories'),
 ]
