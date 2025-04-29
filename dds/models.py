@@ -33,7 +33,7 @@ class Subcategory(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['name', 'type'], name='unique_category_name_type')
+            models.UniqueConstraint(fields=['name', 'category'], name='unique_subcategory_name_category')
         ]
 
     def __str__(self):
