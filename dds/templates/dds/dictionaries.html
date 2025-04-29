@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Управление справочниками</h1>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h3 class="card-title">Статусы</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="post" class="mb-3">
+                        {% csrf_token %}
+                        {{ status_form.as_p }}
+                        <input type="hidden" name="action" value="create_status">
+                        <button type="submit" class="btn btn-primary">Добавить статус</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        {% for status in statuses %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ status.name }}
+                            <form method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="delete_status_{{ status.id }}">
+                                <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                            </form>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">Статусов нет</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h3 class="card-title">Типы</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="post" class="mb-3">
+                        {% csrf_token %}
+                        {{ type_form.as_p }}
+                        <input type="hidden" name="action" value="create_type">
+                        <button type="submit" class="btn btn-primary">Добавить тип</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        {% for type in types %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ type.name }}
+                            <form method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="delete_type_{{ type.id }}">
+                                <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                            </form>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">Типов нет</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h3 class="card-title">Категории</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="post" class="mb-3">
+                        {% csrf_token %}
+                        {{ category_form.as_p }}
+                        <input type="hidden" name="action" value="create_category">
+                        <button type="submit" class="btn btn-primary">Добавить категорию</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        {% for category in categories %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ category.name }} (Тип: {{ category.type.name }})
+                            <form method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="delete_category_{{ category.id }}">
+                                <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                            </form>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">Категорий нет</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h3 class="card-title">Подкатегории</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="post" class="mb-3">
+                        {% csrf_token %}
+                        {{ subcategory_form.as_p }}
+                        <input type="hidden" name="action" value="create_subcategory">
+                        <button type="submit" class="btn btn-primary">Добавить подкатегорию</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        {% for subcategory in subcategories %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ subcategory.name }} (Категория: {{ subcategory.category.name }})
+                            <form method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="delete_subcategory_{{ subcategory.id }}">
+                                <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                            </form>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">Подкатегорий нет</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 15px;
+    }
+    .list-group-item {
+        border-radius: 8px;
+    }
+    .btn-primary, .btn-danger {
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}
