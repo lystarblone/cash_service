@@ -3,18 +3,21 @@ from django.core.exceptions import ValidationError
 
 # Create your models here.
 
+# Модель для статусов транзакций
 class Status(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
 
+# Модель для типов транзакций
 class Type(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
 
+# Модель для категорий, связанных с типами
 class Category(models.Model):
     name = models.CharField(max_length=100)
     type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='categories')
@@ -27,6 +30,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+# Модель для подкатегорий, связанных с категориями
 class Subcategory(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories')
@@ -39,6 +43,7 @@ class Subcategory(models.Model):
     def __str__(self):
         return self.name
 
+# Модель для транзакций с валидацией
 class Transaction(models.Model):
     created_at = models.DateField(auto_now_add=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)

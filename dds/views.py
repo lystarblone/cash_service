@@ -5,6 +5,7 @@ from .models import Transaction, Status, Type, Category, Subcategory
 
 # Create your views here.
 
+# Форма для создания/редактирования транзакций
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
@@ -14,6 +15,7 @@ class TransactionForm(forms.ModelForm):
             'comment': forms.Textarea(attrs={'rows': 4}),
         }
 
+# Форма для статуса
 class StatusForm(forms.ModelForm):
     class Meta:
         model = Status
@@ -22,6 +24,7 @@ class StatusForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
+# Форма для типа
 class TypeForm(forms.ModelForm):
     class Meta:
         model = Type
@@ -30,6 +33,7 @@ class TypeForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
+# Форма для категории
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
@@ -39,6 +43,7 @@ class CategoryForm(forms.ModelForm):
             'type': forms.Select(attrs={'class': 'form-select'}),
         }
 
+# Форма для подкатегории
 class SubcategoryForm(forms.ModelForm):
     class Meta:
         model = Subcategory
@@ -47,7 +52,8 @@ class SubcategoryForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-select'}),
         }
-        
+
+# Главная страница с фильтрацией транзакций
 def index(request):
     transactions = Transaction.objects.all()
 
@@ -74,6 +80,7 @@ def index(request):
 
     return render(request, 'dds/index.html', dataset)
 
+# Создание новой транзакции
 def transaction_create(request):
     dataset = {}
     if request.method == 'POST':
@@ -85,6 +92,7 @@ def transaction_create(request):
         dataset['form'] = TransactionForm()
     return render(request, 'dds/transaction_form.html', dataset)
 
+# Редактирование существующей транзакции
 def transaction_edit(request, pk):
     dataset = {}
     dataset['transaction'] = get_object_or_404(Transaction, pk=pk)
@@ -97,6 +105,7 @@ def transaction_edit(request, pk):
         dataset['form'] = TransactionForm(instance=dataset['transaction'])
     return render(request, 'dds/transaction_form.html', dataset)
 
+# Удаление транзакции
 def transaction_delete(request, pk):
     dataset = {}
     dataset['transaction'] = get_object_or_404(Transaction, pk=pk)
@@ -106,20 +115,24 @@ def transaction_delete(request, pk):
     dataset['transactions'] = Transaction.objects.all()
     return render(request, 'dds/index.html', dataset)
 
+# Получение списка категорий по типу
 def get_categories(request):
     type_id = request.GET.get('type_id')
     categories = Category.objects.filter(type_id=type_id).values('id', 'name')
     return JsonResponse(list(categories), safe=False)
 
+# Получение списка подкатегорий по категории
 def get_subcategories(request):
     category_id = request.GET.get('category_id')
     subcategories = Subcategory.objects.filter(category_id=category_id).values('id', 'name')
     return JsonResponse(list(subcategories), safe=False)
 
+# Получение списка статусов
 def get_statuses(request):
     statuses = Status.objects.values('id', 'name')
     return JsonResponse(list(statuses), safe=False)
 
+# Создание нового статуса
 def create_status(request):
     if request.method == 'POST':
         import json
@@ -131,10 +144,12 @@ def create_status(request):
         return JsonResponse({'success': False, 'errors': form.errors}, status=400)
     return JsonResponse({'success': False}, status=405)
 
+# Получение списка типов
 def get_types(request):
     types = Type.objects.values('id', 'name')
     return JsonResponse(list(types), safe=False)
 
+# Создание нового типа
 def create_type(request):
     if request.method == 'POST':
         import json
@@ -146,6 +161,7 @@ def create_type(request):
         return JsonResponse({'success': False, 'errors': form.errors}, status=400)
     return JsonResponse({'success': False}, status=405)
 
+# Создание новой категории
 def create_category(request):
     if request.method == 'POST':
         import json
@@ -157,6 +173,7 @@ def create_category(request):
         return JsonResponse({'success': False, 'errors': form.errors}, status=400)
     return JsonResponse({'success': False}, status=405)
 
+# Создание новой подкатегории
 def create_subcategory(request):
     if request.method == 'POST':
         import json
@@ -168,6 +185,7 @@ def create_subcategory(request):
         return JsonResponse({'success': False, 'errors': form.errors}, status=400)
     return JsonResponse({'success': False}, status=405)
 
+# Управление справочниками
 def dictionaries(request):
     dataset = {
         'statuses': Status.objects.all(),

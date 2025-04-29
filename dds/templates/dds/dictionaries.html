@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-5">
+    <!-- Заголовок страницы -->
     <h1 class="text-center mb-5">Управление справочниками</h1>
+
+    <!-- Блок для управления статусами -->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h3 class="card-title">Статусы</h3>
@@ -34,6 +37,7 @@
         </div>
     </div>
 
+    <!-- Блок для управления типами -->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h3 class="card-title">Типы</h3>
@@ -66,6 +70,7 @@
         </div>
     </div>
 
+    <!-- Блок для управления категориями -->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h3 class="card-title">Категории</h3>
@@ -98,6 +103,7 @@
         </div>
     </div>
 
+    <!-- Блок для управления подкатегориями -->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h3 class="card-title">Подкатегории</h3>
@@ -129,17 +135,18 @@
             </div>
         </div>
     </div>
-</div>
 
-<style>
-    .card {
-        border-radius: 15px;
-    }
-    .list-group-item {
-        border-radius: 8px;
-    }
-    .btn-primary, .btn-danger {
-        border-radius: 8px;
-    }
-</style>
+    <!-- Стили для оформления -->
+    <style>
+        .card {
+            border-radius: 15px;
+        }
+        .list-group-item {
+            border-radius: 8px;
+        }
+        .btn-primary, .btn-danger {
+            border-radius: 8px;
+        }
+    </style>
+</div>
 {% endblock %}

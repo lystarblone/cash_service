@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-5">
+    <!-- Контейнер формы -->
     <div class="form-container">
+        <!-- Заголовок формы -->
         <h2 class="form-title">
             {% if form.instance.pk %}Редактировать транзакцию{% else %}Создать транзакцию{% endif %}
         </h2>
+        <!-- Форма для создания/редактирования транзакции -->
         <form method="post">
             {% csrf_token %}
+            <!-- Отображение ошибок формы -->
             {% if form.errors %}
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <ul class="mb-0">
@@ -22,6 +26,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endif %}
+            <!-- Поля формы -->
             <div class="form-group">
                 <label class="form-label">Статус</label>
                 {{ form.status }}
@@ -46,6 +51,7 @@
                 <label class="form-label">Комментарий</label>
                 {{ form.comment }}
             </div>
+            <!-- Кнопки управления -->
             <div class="button-group">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
                 <a href="{% url 'dds:index' %}" class="btn btn-secondary">Отмена</a>
@@ -54,6 +60,7 @@
     </div>
 </div>
 
+<!-- Стили для оформления формы -->
 <style>
 .form-container {
     max-width: 600px;
