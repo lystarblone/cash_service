@@ -7,9 +7,8 @@ from .models import Transaction, Status, Type, Category, Subcategory
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
-        fields = ['created_at', 'status', 'type', 'category', 'subcategory', 'amount', 'comment']
+        fields = ['status', 'type', 'category', 'subcategory', 'amount', 'comment']
         widgets = {
-            'created_at': forms.DateInput(attrs={'type': 'date'}),
             'amount': forms.NumberInput(attrs={'step': '0.01'}),
             'comment': forms.Textarea(attrs={'rows': 4}),
         }
